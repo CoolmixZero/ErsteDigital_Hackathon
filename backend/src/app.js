@@ -1,8 +1,10 @@
 const express = require("express");
+import cors from 'cors';
+
 const { OpenAI } = require('openai');
 
-const PORT = 3000;
 app = new express();
+app.use(cors());
 
 // load environment variables
 const dotenv = require("dotenv");
@@ -34,6 +36,6 @@ app.get("/assistant", async (req, res) => {
   // return chatCompletion.choices[0].message;
 });
 
-app.listen(PORT, () => {
+app.listen(process.env.EXPRESS_PORT, () => {
   console.log("Server running on port 3000");
 });

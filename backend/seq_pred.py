@@ -18,6 +18,7 @@ noise = np.random.normal(loc=0, scale=2, size=2000)
 y = 50 + data + seasonality + noise
 
 # Create the DataFrame
+# "y" это данные (баланс в промежуток времени), "ds" это даты
 df = pd.DataFrame({'ds': days, 'y': y})
 
 print(df.tail())

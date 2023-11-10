@@ -1,5 +1,5 @@
 const express = require("express");
-const { Configuration, OpenAIApi } = require("openai");
+const { OpenAI } = require('openai');
 
 const PORT = 3000;
 app = new express();
@@ -9,7 +9,9 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 // initialize OpenAI API and instruction message
-const configuration = new Configuration(process.env.OPENAI_API_KEY);
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY // This is also the default, can be omitted
+});
 
 const instructionMessage = {
   role: "system",
@@ -17,8 +19,12 @@ const instructionMessage = {
 };
 
 
-app.get("/assistant", (req, res) => {
-
+app.get("/assistant", async (req, res) => {
+  const chatCompletion = await openai.chat.completions.create({
+    model: "gpt-3.5-turbo",
+    messages: instructionMessage,
+  });
+  console.log(chatCompletion.choices[0].message);
   res.send("Hello World");
 });
 

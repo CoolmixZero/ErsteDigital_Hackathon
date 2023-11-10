@@ -20,15 +20,19 @@ const instructionMessage = {
 
 
 app.get("/assistant", async (req, res) => {
+  // const body = await req.body;
+  // const { message } = body;
+
   const chatCompletion = await openai.chat.completions.create({
     model: "gpt-3.5-turbo",
-    messages: instructionMessage,
+    messages: [instructionMessage],
+    // messages: [instructionMessage, ...message],
   });
-  console.log(chatCompletion.choices[0].message);
-  res.send("Hello World");
+
+  console.log(chatCompletion);
+  res.send(chatCompletion.choices[0].message);
+  // return chatCompletion.choices[0].message;
 });
-
-
 
 app.listen(PORT, () => {
   console.log("Server running on port 3000");

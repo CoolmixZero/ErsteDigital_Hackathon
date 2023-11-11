@@ -84,17 +84,18 @@ future = model.make_future_dataframe(periods=periods, freq='D')
 # Predict values for future dates
 forecast = model.predict(future)
 
-# Display the forecast
-print(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail())
+# Concatenate the original dataset and the forecasted values
+# df_forecast = pd.concat([df, forecast], ignore_index=True)
 
 # Plot the historical data
 plt.plot(df['ds'], df['y'], label='Historical Data', marker='.', linestyle='-')
 
-# Plot the forecast
-plt.plot(forecast['ds'], forecast['yhat'], label='Forecast', linestyle='--')
-
 # Highlight the forecasted future only
-plt.plot(forecast['ds'][len(df):], forecast['yhat'][len(df):], color='red', label='Future Forecast', linestyle='--')
+f_ids = len(forecast)-periods
+plt.plot([forecast['ds'][f_ids], df['ds'].iloc[-1]], [forecast['yhat'][f_ids], df['y'].iloc[-1]], 
+         color='red', label='Future Forecast', linestyle='--')
+plt.plot(forecast['ds'][f_ids:], forecast['yhat'][f_ids:], 
+         color='red', label='Future Forecast', linestyle='--')
 
 plt.legend()
 plt.xlabel('Date')

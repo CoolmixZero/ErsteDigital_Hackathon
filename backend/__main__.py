@@ -93,7 +93,7 @@ def assistant():
             ["2023-02-13", "Transport", -30]
             ["2023-02-14", "Utilities", -40]
             ["2023-02-15", "Clothing", -100]
-            # Client question: How can I safe more money?"""
+            # Client question: How can I save more money?"""
         }
     ]
 
@@ -106,6 +106,10 @@ def assistant():
 
 @app.get("/forecast")
 def forecast():
+    return jsonify(sequence_prediction())
+
+@app.get("/imagetotext")
+def imagetotext():
     return jsonify(sequence_prediction())
 
 if __name__ == "__main__":

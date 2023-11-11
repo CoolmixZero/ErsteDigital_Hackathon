@@ -93,12 +93,12 @@ const modifiedData = [];
 for (let i = 0; i < dummyData.length; i++) {
   // const randomCategory = categories[Math.floor(Math.random() * categories.length)];
   // const randomAmount = Math.floor(Math.random() * 100); // Generate a random amount (you can adjust the range)
-  const randomBalance = Math.floor(Math.random() * 1000); // Generate a random balance (you can adjust the range)
+  const randomBalance = 1000;
 
   modifiedData.push({
     category: dummyData[i][1],
     amount: new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(dummyData[i][2]),
-    balance: new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(randomBalance),
+    balance: new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(randomBalance + dummyData[i][2]),
   });
 }
 

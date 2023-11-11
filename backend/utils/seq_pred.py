@@ -87,11 +87,17 @@ forecast = model.predict(future)
 # Display the forecast
 print(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail())
 
-fig = model.plot(forecast)
+# Plot the historical data
+plt.plot(df['ds'], df['y'], label='Historical Data', marker='.', linestyle='-')
 
-plt.title('Prophet Forecast')
-plt.ylabel('Predicted Value')
+# Plot the forecast
+plt.plot(forecast['ds'], forecast['yhat'], label='Forecast', linestyle='--')
+
+# Highlight the forecasted future only
+plt.plot(forecast['ds'][len(df):], forecast['yhat'][len(df):], color='red', label='Future Forecast', linestyle='--')
+
+plt.legend()
 plt.xlabel('Date')
-# plt.xlim(df["ds"].iloc[-20], df["ds"].iloc[-1] + pd.DateOffset(days=periods))
-
+plt.ylabel('Value')
+plt.title('Historical Data and Prophet Forecast')
 plt.show()

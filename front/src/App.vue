@@ -1,5 +1,8 @@
-<script setup lang="ts">
+<script setup>
 import { ref } from "vue";
+
+let month = ref(null);
+let money = ref(null);
 
 const items = ref([
   {
@@ -49,6 +52,108 @@ for (let i = 0; i < 25; i++) {
 }
 
 const rows = ref(dummyData);
+</script>
+
+<script>
+import * as echarts from "echarts";
+import { nextTick } from "vue";
+
+export default {
+  name: "App",
+
+  data() {
+    return {
+      aiCalled: false,
+    };
+  },
+
+  methods: {
+    CallAiAssistance() {
+      this.aiCalled = true;
+
+      this.axios.get("localhost:3000/assistant").then((response) => {
+        console.log(response.data);
+      });
+
+      nextTick(() => {
+        this.initChart();
+      });
+    },
+    initChart() {
+      const myChart = echarts.init(this.$refs.lineChart);
+
+      // Sample data for the line chart
+      const data = {
+        xData: ["Jan", "Feb", "Mar", "Apr", "May"],
+        yData: [50, 60, 70, 80, 90],
+      };
+
+      const option = {
+        grid: {
+          top: 20,
+        },
+        xAxis: {
+          type: "category",
+          data: data.xData,
+          axisLine: {
+            lineStyle: {
+              color: "#999", // X-axis line color
+            },
+          },
+        },
+        yAxis: {
+          type: "value",
+          axisLine: {
+            lineStyle: {
+              color: "#999", // Y-axis line color
+            },
+          },
+        },
+        series: [
+          {
+            type: "line",
+            data: data.yData,
+            lineStyle: {
+              color: "lightblue", // Light blue line color
+              width: 3, // Increase line thickness
+            },
+            itemStyle: {
+              color: "lightblue", // Data point color
+            },
+            label: {
+              show: true,
+              position: "top",
+              textStyle: {
+                color: "#333", // Label text color
+              },
+            },
+            areaStyle: {
+              // Add a gradient below the line
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                {
+                  offset: 0,
+                  color: "rgba(173, 216, 230, 0.8)", // Gradient color at the top
+                },
+                {
+                  offset: 1,
+                  color: "rgba(255, 255, 255, 0.2)", // Gradient color at the bottom
+                },
+              ]),
+            },
+            symbol: "circle", // Use circles as markers
+            symbolSize: 8, // Set marker size
+            tooltip: {
+              trigger: "axis",
+              formatter: "{b}: {c}", // Display x-axis label and y-axis value in tooltip
+            },
+          },
+        ],
+      };
+
+      myChart.setOption(option);
+    },
+  },
+};
 </script>
 
 <template>
@@ -128,46 +233,45 @@ const rows = ref(dummyData);
 
       <div class="main-content w-full h-full shadow-lg bg-white rounded-lg">
         <div class="p-7 flex flex-col items-center">
+          <Message v-if="aiCalled" :closable="false" class="w-full" icon="pi pi-star">
+            <VueWriter
+              :typeSpeed="10"
+              :array="[
+                `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`,
+              ]"
+              :iterations="1"
+            />
+          </Message>
+
           <span class="text-2xl font-bold self-start">Spendings & Incomes</span>
+
           <DataTable :value="rows" scrollable scrollHeight="400px" class="mt-5 self-start w-full" tableStyle="max-height: 200px;">
             <Column field="category" header="Category"></Column>
             <Column field="amount" header="Amount"></Column>
             <Column field="balance" header="Balance"></Column>
           </DataTable>
 
-          <span class="text-2xl font-bold mt-7">Ask AI assistant! ✨</span>
+          <template v-if="!aiCalled">
+            <span class="text-2xl font-bold mt-7">Ask AI assistant! ✨</span>
 
-          <div class="flex flex-row mt-6 gap-3">
-            <span class="p-input-icon-left">
-              <i class="pi pi-money-bill" />
-              <InputText v-model="money" placeholder="How much to save" />
-            </span>
-            <span class="p-input-icon-left">
-              <i class="pi pi-clock" />
-              <InputText v-model="money" placeholder="Month to save" />
-            </span>
-            <Button class="ai-button" label="Submit" icon="pi pi-reddit" />
-          </div>
+            <div class="flex flex-row mt-6 gap-3">
+              <span class="p-input-icon-left">
+                <i class="pi pi-money-bill" />
+                <InputText v-model="money" placeholder="How much to save" />
+              </span>
+              <span class="p-input-icon-left">
+                <i class="pi pi-clock" />
+                <InputText v-model="month" placeholder="Month to save" />
+              </span>
+              <Button @click="CallAiAssistance" class="ai-button" label="Submit" icon="pi pi-reddit" />
+              <Button icon="pi pi-microphone" rounded />
+            </div>
+          </template>
 
-          <!-- <TabView>
-            <TabPanel header="Savings AI Bot"> Hello World </TabPanel>
-            <TabPanel header="Analysis">
-              <p class="m-0">
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae
-                ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-                aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci
-                velit, sed quia non numquam eius modi.
-              </p>
-            </TabPanel>
-            <TabPanel header="History">
-              <p class="m-0">
-                At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores
-                et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id
-                est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est
-                eligendi optio cumque nihil impedit quo minus.
-              </p>
-            </TabPanel>
-          </TabView> -->
+          <template v-else>
+            <span class="text-2xl font-bold mt-7">Account Balance AI prediction</span>
+            <div ref="lineChart" class="echarts-chart"></div>
+          </template>
         </div>
       </div>
     </div>
@@ -194,6 +298,16 @@ const rows = ref(dummyData);
         position: relative;
       }
     }
+  }
+}
+
+.main-content {
+  max-height: 680px;
+  overflow: auto;
+
+  .echarts-chart {
+    width: 100%;
+    height: 400px;
   }
 }
 </style>

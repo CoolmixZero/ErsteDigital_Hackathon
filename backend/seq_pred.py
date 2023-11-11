@@ -3,25 +3,73 @@ from prophet import Prophet
 import matplotlib.pyplot as plt
 import numpy as np
 
+import pandas as pd
+import matplotlib.pyplot as plt
 
-# Generate more random data for the example
-# Let's create a dataset with a slightly more complex pattern
-np.random.seed(42)  # for reproducibility
 
-# Generate random data with a trend and some seasonality
-days = pd.date_range(start='2020-01-01', periods=2000, freq='D')
-data = np.random.normal(loc=0, scale=5, size=2000).cumsum()
-seasonality = np.sin(np.linspace(0, 20, 2000)) * 20
-noise = np.random.normal(loc=0, scale=2, size=2000)
+# Define the data
+current_balance = 1000
+data = [
+    ["2023-01-01", "Groceries", -45],
+    ["2023-01-01", "Utilities", -30],
+    ["2023-01-02", "Rent", -500],
+    ["2023-01-02", "Freelance Income", 200],
+    ["2023-01-03", "Transport", -20],
+    ["2023-01-04", "Dining Out", -35],
+    ["2023-01-05", "Gym Membership", -25],
+    ["2023-01-05", "Salary", 1000],
+    ["2023-01-06", "Entertainment", -50],
+    ["2023-01-07", "Groceries", -60],
+    ["2023-01-08", "Healthcare", -40],
+    ["2023-01-09", "Transport", -15],
+    ["2023-01-10", "Utilities", -25],
+    ["2023-01-11", "Clothing", -75],
+    ["2023-01-12", "Freelance Income", 150],
+    ["2023-01-13", "Rent", -500],
+    ["2023-01-14", "Groceries", -55],
+    ["2023-01-15", "Dining Out", -30],
+    ["2023-01-16", "Gym Membership", -25],
+    ["2023-01-18", "Entertainment", -60],
+    ["2023-01-19", "Groceries", -70],
+    ["2023-01-20", "Healthcare", -45],
+    ["2023-01-21", "Transport", -20],
+    ["2023-01-22", "Utilities", -30],
+    ["2023-01-23", "Clothing", -80],
+    ["2023-01-24", "Freelance Income", 250],
+    ["2023-01-25", "Rent", -500],
+    ["2023-01-26", "Groceries", -65],
+    ["2023-01-27", "Dining Out", -40],
+    ["2023-01-28", "Gym Membership", -25],
+    ["2023-01-30", "Entertainment", -55],
+    ["2023-01-31", "Groceries", -75],
+    ["2023-01-31", "Healthcare", -50],
+    ["2023-02-01", "Transport", -25],
+    ["2023-02-02", "Utilities", -35],
+    ["2023-02-03", "Clothing", -90],
+    ["2023-02-04", "Freelance Income", 300],
+    ["2023-02-05", "Rent", -550],
+    ["2023-02-06", "Groceries", -50],
+    ["2023-02-07", "Dining Out", -45],
+    ["2023-02-08", "Gym Membership", -30],
+    ["2023-02-09", "Salary", 1150],
+    ["2023-02-10", "Entertainment", -70],
+    ["2023-02-11", "Groceries", -80],
+    ["2023-02-12", "Healthcare", -60],
+    ["2023-02-13", "Transport", -30],
+    ["2023-02-14", "Utilities", -40],
+    ["2023-02-15", "Clothing", -100]
+]
 
-# Combine trend, seasonality, and noise
-y = 50 + data + seasonality + noise
+for i in range(len(data)):
+    current_balance += data[i][2]
+    data[i][2] = current_balance
 
-# Create the DataFrame
-# "y" это данные (баланс в промежуток времени), "ds" это даты
-df = pd.DataFrame({'ds': days, 'y': y})
+# Convert to DataFrame
+df = pd.DataFrame(data, columns=['ds', 'Category', 'y'])
+df.drop(columns=['Category'], inplace=True)
 
-print(df.tail())
+# Convert the 'Date' column to datetime
+df['ds'] = pd.to_datetime(df['ds'])
 
 # Initialize a Prophet model
 model = Prophet(interval_width=0.92, daily_seasonality=True)
@@ -30,8 +78,8 @@ model = Prophet(interval_width=0.92, daily_seasonality=True)
 model.fit(df)
 
 # Create a DataFrame for future dates to predict
-periods = 60
-future = model.make_future_dataframe(periods=periods)
+periods = 15
+future = model.make_future_dataframe(periods=periods, freq='D')
 
 # Predict values for future dates
 forecast = model.predict(future)
@@ -44,6 +92,6 @@ fig = model.plot(forecast)
 plt.title('Prophet Forecast')
 plt.ylabel('Predicted Value')
 plt.xlabel('Date')
-plt.xlim(days[-300], days[-1] + pd.DateOffset(days=periods))
+# plt.xlim(df["ds"].iloc[-20], df["ds"].iloc[-1] + pd.DateOffset(days=periods))
 
 plt.show()

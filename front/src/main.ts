@@ -14,6 +14,8 @@ import VueAxios from "vue-axios";
 import VueWriter from "vue-writer";
 import TabView from "primevue/tabview";
 import TabPanel from "primevue/tabpanel";
+import FileUpload from "primevue/fileupload";
+import ProgressSpinner from "primevue/progressspinner";
 
 import "./style.scss";
 
@@ -33,5 +35,7 @@ app.component("InputText", InputText);
 app.component("Message", Message);
 app.component("TabView", TabView);
 app.component("TabPanel", TabPanel);
+app.component("FileUpload", FileUpload);
+app.component("ProgressSpinner", ProgressSpinner);
 app.use(VueWriter);
 app.mount("#app");

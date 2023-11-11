@@ -336,7 +336,7 @@ export default {
             <VueWriter
               :typeSpeed="10"
               :array="[
-                `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`,
+                `Looking at your transaction history, here are the categories where you can save money: 1. Groceries: You spent a total of $660 on groceries. You can save money in this category by planning your meals, making a grocery list, and avoiding impulse purchases. Consider buying in bulk or shopping at budget-friendly stores to save even more. 2. Dining Out: You spent a total of $150 on dining out. To save money in this category, you can try cooking at home more often and reserve eating out for special occasions. 3. Gym Membership: You spent a total of $105 on your gym membership. To save money, you could explore alternative fitness options such as outdoor activities, home workouts, or joining a local community center that offers affordable fitness programs. 4. Utilities: You spent a total of $95 on utilities. To save money in this category, you can conserve energy by turning off lights and appliances when not in use, adjusting your thermostat, and using energy-efficient products. 5. Transportation: You spent a total of $95 on transportation. To save money in this category, consider carpooling, using public transportation, biking, or walking for shorter distances whenever possible. Additionally, monitoring gas prices and planning your routes efficiently can help reduce expenses. 6. Clothing: You spent a total of $345 on clothing. To save money, assess your wardrobe and prioritize buying essential items only. Consider shopping during sales, buying second-hand, or swapping clothes with friends or family. 7. Healthcare: You spent a total of $145 on healthcare expenses. While healthcare is essential, you can save money in this category by exploring options like generic medications, preventive care, and comparing prices for medical services and prescriptions. By making adjustments in these categories, you can potentially save around $1560 in total. Remember, small changes in daily habits can add up to significant savings over time.`,
               ]"
               :iterations="1"
             />
@@ -346,8 +346,20 @@ export default {
 
           <DataTable :value="rows" scrollable scrollHeight="400px" class="mt-5 self-start w-full" tableStyle="max-height: 200px;">
             <Column field="category" header="Category"></Column>
-            <Column field="amount" header="Amount"></Column>
-            <Column field="balance" header="Balance"></Column>
+            <Column field="amount" header="Amount">
+              <template #body="props">
+                <span :class="props.data.amount.includes('-') ? 'text-red-500' : 'text-green-500'">
+                  {{ props.data.amount }}
+                </span>
+              </template>
+            </Column>
+            <Column field="balance" header="Balance">
+              <template #body="props">
+                <span :class="props.data.amount.includes('-') ? 'text-red-500' : 'text-green-500'">
+                  {{ props.data.balance }}
+                </span>
+              </template>
+            </Column>
           </DataTable>
 
           <template v-if="!aiCalled">

@@ -81,5 +81,5 @@ def sequence_prediction():
   # Predict values for future dates
   forecast = model.predict(future)
 
-  # Display the forecast
+  forecast['ds'] = forecast['ds'].dt.strftime('%Y-%m-%d') 
   return forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].to_json()

@@ -263,8 +263,10 @@ export default {
                 <i class="pi pi-clock" />
                 <InputText v-model="month" placeholder="Month to save" />
               </span>
-              <Button @click="CallAiAssistance" class="ai-button" label="Submit" icon="pi pi-reddit" /></div
-          ></template>
+              <Button @click="CallAiAssistance" class="ai-button" label="Submit" icon="pi pi-reddit" />
+              <Button icon="pi pi-microphone" rounded />
+            </div>
+          </template>
 
           <template v-else>
             <span class="text-2xl font-bold mt-7">Account Balance AI prediction</span>

@@ -84,5 +84,6 @@ def sequence_prediction():
   forecast['ds'] = forecast['ds'].dt.strftime('%Y-%m-%d')
   forecast['y'] = df['y']
   forecast['yhat'] = forecast['yhat'].iloc[len(forecast)-periods:]
+  
   final_forecast = forecast[['ds', 'y', 'yhat']].to_json()
   return final_forecast

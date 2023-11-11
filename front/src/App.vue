@@ -23,35 +23,86 @@ const items = ref([
   },
 ]);
 
-const categories = [
-  "Coffee Shop",
-  "Clothing Store",
-  "Restaurant",
-  "Gym",
-  "Supermarket",
-  "Movie Theater",
-  "Gas Station",
-  "Pharmacy",
-  "Bookstore",
-  "Hair Salon",
-  // Add more categories as needed
+// const categories = [
+//   "Coffee Shop",
+//   "Clothing Store",
+//   "Restaurant",
+//   "Gym",
+//   "Supermarket",
+//   "Movie Theater",
+//   "Gas Station",
+//   "Pharmacy",
+//   "Bookstore",
+//   "Hair Salon",
+//   // Add more categories as needed
+// ];
+
+const dummyData = [
+      ["2023-01-01", "Groceries", -45],
+      ["2023-01-01", "Utilities", -30],
+      ["2023-01-02", "Rent", -250],
+      ["2023-01-02", "Freelance Income", 200],
+      ["2023-01-03", "Transport", -20],
+      ["2023-01-04", "Dining Out", -35],
+      ["2023-01-05", "Gym Membership", -25],
+      ["2023-01-05", "Salary", 1000],
+      ["2023-01-06", "Entertainment", -50],
+      ["2023-01-07", "Groceries", -60],
+      ["2023-01-08", "Healthcare", -40],
+      ["2023-01-09", "Transport", -15],
+      ["2023-01-10", "Utilities", -25],
+      ["2023-01-11", "Clothing", -75],
+      ["2023-01-12", "Freelance Income", 150],
+      ["2023-01-13", "Rent", -250],
+      ["2023-01-14", "Groceries", -55],
+      ["2023-01-15", "Dining Out", -30],
+      ["2023-01-16", "Gym Membership", -25],
+      ["2023-01-18", "Entertainment", -60],
+      ["2023-01-19", "Groceries", -70],
+      ["2023-01-20", "Healthcare", -45],
+      ["2023-01-21", "Transport", -20],
+      ["2023-01-22", "Utilities", -30],
+      ["2023-01-23", "Clothing", -80],
+      ["2023-01-24", "Freelance Income", 250],
+      ["2023-01-25", "Rent", -250],
+      ["2023-01-26", "Groceries", -65],
+      ["2023-01-27", "Dining Out", -40],
+      ["2023-01-28", "Gym Membership", -25],
+      ["2023-01-30", "Entertainment", -55],
+      ["2023-01-31", "Groceries", -75],
+      ["2023-01-31", "Healthcare", -50],
+      ["2023-02-01", "Transport", -25],
+      ["2023-02-02", "Utilities", -35],
+      ["2023-02-03", "Clothing", -90],
+      ["2023-02-04", "Freelance Income", 300],
+      ["2023-02-05", "Rent", -275],
+      ["2023-02-06", "Groceries", -50],
+      ["2023-02-07", "Dining Out", -45],
+      ["2023-02-08", "Gym Membership", -30],
+      ["2023-02-09", "Salary", 1150],
+      ["2023-02-10", "Entertainment", -70],
+      ["2023-02-11", "Groceries", -80],
+      ["2023-02-12", "Healthcare", -60],
+      ["2023-02-13", "Transport", -30],
+      ["2023-02-14", "Utilities", -40],
+      ["2023-02-15", "Clothing", -100]
 ];
 
-const dummyData = [];
+const modifiedData = [];
 
-for (let i = 0; i < 25; i++) {
-  const randomCategory = categories[Math.floor(Math.random() * categories.length)];
-  const randomAmount = Math.floor(Math.random() * 100); // Generate a random amount (you can adjust the range)
+for (let i = 0; i < dummyData.length; i++) {
+  // const randomCategory = categories[Math.floor(Math.random() * categories.length)];
+  // const randomAmount = Math.floor(Math.random() * 100); // Generate a random amount (you can adjust the range)
   const randomBalance = Math.floor(Math.random() * 1000); // Generate a random balance (you can adjust the range)
 
-  dummyData.push({
-    category: randomCategory,
-    amount: new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(randomAmount),
+  modifiedData.push({
+    category: dummyData[i][1],
+    amount: new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(dummyData[i][2]),
     balance: new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(randomBalance),
   });
 }
 
-const rows = ref(dummyData);
+const rows = ref(modifiedData);
 </script>
 
 <script>
@@ -64,6 +115,7 @@ export default {
   data() {
     return {
       aiCalled: false,
+      responseData: null,
     };
   },
 
@@ -71,12 +123,19 @@ export default {
     CallAiAssistance() {
       this.aiCalled = true;
 
-      this.axios.get("localhost:3000/assistant").then((response) => {
-        console.log(response.data);
-      });
+      this.axios.get("http://127.0.0.1:3000/forecast").then((response) => {
+        // Parse the JSON string into a JavaScript object
+        const parsedData = JSON.parse(response.data);
 
-      nextTick(() => {
-        this.initChart();
+        // Store the parsed data
+        this.responseData = {
+          xData: Object.values(parsedData.ds),
+          yData: Object.values(parsedData.y),
+          predictedYData: Object.values(parsedData.yhat),
+        };
+        nextTick(() => {
+          this.initChart();
+        });
       });
     },
     initChart() {
@@ -84,9 +143,12 @@ export default {
 
       // Sample data for the line chart
       const data = {
-        xData: ["Jan", "Feb", "Mar", "Apr", "May"],
-        yData: [50, 60, 70, 80, 90],
+        xData: this.responseData.xData,
+        yData: this.responseData.yData,
+        predictedYData: this.responseData.predictedYData,
       };
+
+      console.log(data);
 
       const option = {
         grid: {
@@ -119,6 +181,43 @@ export default {
             },
             itemStyle: {
               color: "lightblue", // Data point color
+            },
+            label: {
+              show: true,
+              position: "top",
+              textStyle: {
+                color: "#333", // Label text color
+              },
+            },
+            areaStyle: {
+              // Add a gradient below the line
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                {
+                  offset: 0,
+                  color: "rgba(173, 216, 230, 0.8)", // Gradient color at the top
+                },
+                {
+                  offset: 1,
+                  color: "rgba(255, 255, 255, 0.2)", // Gradient color at the bottom
+                },
+              ]),
+            },
+            symbol: "circle", // Use circles as markers
+            symbolSize: 8, // Set marker size
+            tooltip: {
+              trigger: "axis",
+              formatter: "{b}: {c}", // Display x-axis label and y-axis value in tooltip
+            },
+          },
+          {
+            type: "line",
+            data: data.predictedYData,
+            lineStyle: {
+              color: "lightgreen", // Light blue line color
+              width: 3, // Increase line thickness
+            },
+            itemStyle: {
+              color: "lightgreen", // Data point color
             },
             label: {
               show: true,
@@ -263,10 +362,8 @@ export default {
                 <i class="pi pi-clock" />
                 <InputText v-model="month" placeholder="Month to save" />
               </span>
-              <Button @click="CallAiAssistance" class="ai-button" label="Submit" icon="pi pi-reddit" />
-              <Button icon="pi pi-microphone" rounded />
-            </div>
-          </template>
+              <Button @click="CallAiAssistance" class="ai-button" label="Submit" icon="pi pi-reddit" /></div
+          ></template>
 
           <template v-else>
             <span class="text-2xl font-bold mt-7">Account Balance AI prediction</span>

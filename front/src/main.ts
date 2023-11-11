@@ -12,6 +12,8 @@ import Message from "primevue/message";
 import axios from "axios";
 import VueAxios from "vue-axios";
 import VueWriter from "vue-writer";
+import TabView from "primevue/tabview";
+import TabPanel from "primevue/tabpanel";
 
 import "./style.scss";
 
@@ -29,5 +31,7 @@ app.component("DataTable", DataTable);
 app.component("Column", Column);
 app.component("InputText", InputText);
 app.component("Message", Message);
+app.component("TabView", TabView);
+app.component("TabPanel", TabPanel);
 app.use(VueWriter);
 app.mount("#app");

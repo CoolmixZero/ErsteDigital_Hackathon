@@ -38,54 +38,54 @@ const items = ref([
 // ];
 
 const dummyData = [
-      ["2023-01-01", "Groceries", -45],
-      ["2023-01-01", "Utilities", -30],
-      ["2023-01-02", "Rent", -250],
-      ["2023-01-02", "Freelance Income", 200],
-      ["2023-01-03", "Transport", -20],
-      ["2023-01-04", "Dining Out", -35],
-      ["2023-01-05", "Gym Membership", -25],
-      ["2023-01-05", "Salary", 1000],
-      ["2023-01-06", "Entertainment", -50],
-      ["2023-01-07", "Groceries", -60],
-      ["2023-01-08", "Healthcare", -40],
-      ["2023-01-09", "Transport", -15],
-      ["2023-01-10", "Utilities", -25],
-      ["2023-01-11", "Clothing", -75],
-      ["2023-01-12", "Freelance Income", 150],
-      ["2023-01-13", "Rent", -250],
-      ["2023-01-14", "Groceries", -55],
-      ["2023-01-15", "Dining Out", -30],
-      ["2023-01-16", "Gym Membership", -25],
-      ["2023-01-18", "Entertainment", -60],
-      ["2023-01-19", "Groceries", -70],
-      ["2023-01-20", "Healthcare", -45],
-      ["2023-01-21", "Transport", -20],
-      ["2023-01-22", "Utilities", -30],
-      ["2023-01-23", "Clothing", -80],
-      ["2023-01-24", "Freelance Income", 250],
-      ["2023-01-25", "Rent", -250],
-      ["2023-01-26", "Groceries", -65],
-      ["2023-01-27", "Dining Out", -40],
-      ["2023-01-28", "Gym Membership", -25],
-      ["2023-01-30", "Entertainment", -55],
-      ["2023-01-31", "Groceries", -75],
-      ["2023-01-31", "Healthcare", -50],
-      ["2023-02-01", "Transport", -25],
-      ["2023-02-02", "Utilities", -35],
-      ["2023-02-03", "Clothing", -90],
-      ["2023-02-04", "Freelance Income", 300],
-      ["2023-02-05", "Rent", -275],
-      ["2023-02-06", "Groceries", -50],
-      ["2023-02-07", "Dining Out", -45],
-      ["2023-02-08", "Gym Membership", -30],
-      ["2023-02-09", "Salary", 1150],
-      ["2023-02-10", "Entertainment", -70],
-      ["2023-02-11", "Groceries", -80],
-      ["2023-02-12", "Healthcare", -60],
-      ["2023-02-13", "Transport", -30],
-      ["2023-02-14", "Utilities", -40],
-      ["2023-02-15", "Clothing", -100]
+  ["2023-01-01", "Groceries", -45],
+  ["2023-01-01", "Utilities", -30],
+  ["2023-01-02", "Rent", -250],
+  ["2023-01-02", "Freelance Income", 200],
+  ["2023-01-03", "Transport", -20],
+  ["2023-01-04", "Dining Out", -35],
+  ["2023-01-05", "Gym Membership", -25],
+  ["2023-01-05", "Salary", 1000],
+  ["2023-01-06", "Entertainment", -50],
+  ["2023-01-07", "Groceries", -60],
+  ["2023-01-08", "Healthcare", -40],
+  ["2023-01-09", "Transport", -15],
+  ["2023-01-10", "Utilities", -25],
+  ["2023-01-11", "Clothing", -75],
+  ["2023-01-12", "Freelance Income", 150],
+  ["2023-01-13", "Rent", -250],
+  ["2023-01-14", "Groceries", -55],
+  ["2023-01-15", "Dining Out", -30],
+  ["2023-01-16", "Gym Membership", -25],
+  ["2023-01-18", "Entertainment", -60],
+  ["2023-01-19", "Groceries", -70],
+  ["2023-01-20", "Healthcare", -45],
+  ["2023-01-21", "Transport", -20],
+  ["2023-01-22", "Utilities", -30],
+  ["2023-01-23", "Clothing", -80],
+  ["2023-01-24", "Freelance Income", 250],
+  ["2023-01-25", "Rent", -250],
+  ["2023-01-26", "Groceries", -65],
+  ["2023-01-27", "Dining Out", -40],
+  ["2023-01-28", "Gym Membership", -25],
+  ["2023-01-30", "Entertainment", -55],
+  ["2023-01-31", "Groceries", -75],
+  ["2023-01-31", "Healthcare", -50],
+  ["2023-02-01", "Transport", -25],
+  ["2023-02-02", "Utilities", -35],
+  ["2023-02-03", "Clothing", -90],
+  ["2023-02-04", "Freelance Income", 300],
+  ["2023-02-05", "Rent", -275],
+  ["2023-02-06", "Groceries", -50],
+  ["2023-02-07", "Dining Out", -45],
+  ["2023-02-08", "Gym Membership", -30],
+  ["2023-02-09", "Salary", 1150],
+  ["2023-02-10", "Entertainment", -70],
+  ["2023-02-11", "Groceries", -80],
+  ["2023-02-12", "Healthcare", -60],
+  ["2023-02-13", "Transport", -30],
+  ["2023-02-14", "Utilities", -40],
+  ["2023-02-15", "Clothing", -100],
 ];
 
 const modifiedData = [];
@@ -271,7 +271,7 @@ export default {
 
       <template #end>
         <div class="flex items-center gap-4 font-semibold text-lg">
-          <span>$251,765</span>
+          <span>$5,000</span>
           <Avatar image="https://thispersondoesnotexist.com/" size="large" shape="circle" />
         </div>
       </template>
@@ -331,57 +331,68 @@ export default {
       </div>
 
       <div class="main-content w-full h-full shadow-lg bg-white rounded-lg">
-        <div class="p-7 flex flex-col items-center">
-          <Message v-if="aiCalled" :closable="false" class="w-full" icon="pi pi-star">
-            <VueWriter
-              :typeSpeed="10"
-              :array="[
-                `Looking at your transaction history, here are the categories where you can save money: 1. Groceries: You spent a total of $660 on groceries. You can save money in this category by planning your meals, making a grocery list, and avoiding impulse purchases. Consider buying in bulk or shopping at budget-friendly stores to save even more. 2. Dining Out: You spent a total of $150 on dining out. To save money in this category, you can try cooking at home more often and reserve eating out for special occasions. 3. Gym Membership: You spent a total of $105 on your gym membership. To save money, you could explore alternative fitness options such as outdoor activities, home workouts, or joining a local community center that offers affordable fitness programs. 4. Utilities: You spent a total of $95 on utilities. To save money in this category, you can conserve energy by turning off lights and appliances when not in use, adjusting your thermostat, and using energy-efficient products. 5. Transportation: You spent a total of $95 on transportation. To save money in this category, consider carpooling, using public transportation, biking, or walking for shorter distances whenever possible. Additionally, monitoring gas prices and planning your routes efficiently can help reduce expenses. 6. Clothing: You spent a total of $345 on clothing. To save money, assess your wardrobe and prioritize buying essential items only. Consider shopping during sales, buying second-hand, or swapping clothes with friends or family. 7. Healthcare: You spent a total of $145 on healthcare expenses. While healthcare is essential, you can save money in this category by exploring options like generic medications, preventive care, and comparing prices for medical services and prescriptions. By making adjustments in these categories, you can potentially save around $1560 in total. Remember, small changes in daily habits can add up to significant savings over time.`,
-              ]"
-              :iterations="1"
-            />
-          </Message>
+        <TabView>
+          <TabPanel header="AI Assistant">
+            <div class="p-7 flex flex-col items-center">
+              <Message v-if="aiCalled" :closable="false" class="w-full" icon="pi pi-star">
+                <VueWriter
+                  :typeSpeed="10"
+                  :array="[
+                    `Looking at your transaction history, here are the categories where you can save money: 1. Groceries: You spent a total of $660 on groceries. You can save money in this category by planning your meals, making a grocery list, and avoiding impulse purchases. Consider buying in bulk or shopping at budget-friendly stores to save even more. 2. Dining Out: You spent a total of $150 on dining out. To save money in this category, you can try cooking at home more often and reserve eating out for special occasions. 3. Gym Membership: You spent a total of $105 on your gym membership. To save money, you could explore alternative fitness options such as outdoor activities, home workouts, or joining a local community center that offers affordable fitness programs. 4. Utilities: You spent a total of $95 on utilities. To save money in this category, you can conserve energy by turning off lights and appliances when not in use, adjusting your thermostat, and using energy-efficient products. 5. Transportation: You spent a total of $95 on transportation. To save money in this category, consider carpooling, using public transportation, biking, or walking for shorter distances whenever possible. Additionally, monitoring gas prices and planning your routes efficiently can help reduce expenses. 6. Clothing: You spent a total of $345 on clothing. To save money, assess your wardrobe and prioritize buying essential items only. Consider shopping during sales, buying second-hand, or swapping clothes with friends or family. 7. Healthcare: You spent a total of $145 on healthcare expenses. While healthcare is essential, you can save money in this category by exploring options like generic medications, preventive care, and comparing prices for medical services and prescriptions. By making adjustments in these categories, you can potentially save around $1560 in total. Remember, small changes in daily habits can add up to significant savings over time.`,
+                  ]"
+                  :iterations="1"
+                />
+              </Message>
 
-          <span class="text-2xl font-bold self-start">Spendings & Incomes</span>
+              <span class="text-2xl font-bold self-start">Spendings & Incomes</span>
 
-          <DataTable :value="rows" scrollable scrollHeight="400px" class="mt-5 self-start w-full" tableStyle="max-height: 200px;">
-            <Column field="category" header="Category"></Column>
-            <Column field="amount" header="Amount">
-              <template #body="props">
-                <span :class="props.data.amount.includes('-') ? 'text-red-500' : 'text-green-500'">
-                  {{ props.data.amount }}
-                </span>
+              <DataTable :value="rows" scrollable scrollHeight="400px" class="mt-5 self-start w-full" tableStyle="max-height: 200px;">
+                <Column field="category" header="Category"></Column>
+                <Column field="amount" header="Amount">
+                  <template #body="props">
+                    <span :class="props.data.amount.includes('-') ? 'text-red-500' : 'text-green-500'">
+                      {{ props.data.amount }}
+                    </span>
+                  </template>
+                </Column>
+                <Column field="balance" header="Balance">
+                  <template #body="props">
+                    <span :class="props.data.amount.includes('-') ? 'text-red-500' : 'text-green-500'">
+                      {{ props.data.balance }}
+                    </span>
+                  </template>
+                </Column>
+              </DataTable>
+
+              <template v-if="!aiCalled">
+                <span class="text-2xl font-bold mt-7">Ask AI assistant! ✨</span>
+
+                <div class="flex flex-row mt-6 gap-3">
+                  <span class="p-input-icon-left">
+                    <i class="pi pi-money-bill" />
+                    <InputText v-model="money" placeholder="How much to save" />
+                  </span>
+                  <span class="p-input-icon-left">
+                    <i class="pi pi-clock" />
+                    <InputText v-model="month" placeholder="Month to save" />
+                  </span>
+                  <Button @click="CallAiAssistance" class="ai-button" label="Submit" icon="pi pi-reddit" /></div
+              ></template>
+
+              <template v-else>
+                <span class="text-2xl font-bold mt-7">Account Balance AI prediction</span>
+                <div ref="lineChart" class="echarts-chart"></div>
               </template>
-            </Column>
-            <Column field="balance" header="Balance">
-              <template #body="props">
-                <span :class="props.data.amount.includes('-') ? 'text-red-500' : 'text-green-500'">
-                  {{ props.data.balance }}
-                </span>
+            </div>
+          </TabPanel>
+          <TabPanel header="Receipt AI Reader">
+            <FileUpload name="demo[]" url="/api/upload" @upload="onAdvancedUpload($event)" :multiple="true" accept="image/*" :maxFileSize="1000000">
+              <template #empty>
+                <p>Drag and drop files to here to upload.</p>
               </template>
-            </Column>
-          </DataTable>
-
-          <template v-if="!aiCalled">
-            <span class="text-2xl font-bold mt-7">Ask AI assistant! ✨</span>
-
-            <div class="flex flex-row mt-6 gap-3">
-              <span class="p-input-icon-left">
-                <i class="pi pi-money-bill" />
-                <InputText v-model="money" placeholder="How much to save" />
-              </span>
-              <span class="p-input-icon-left">
-                <i class="pi pi-clock" />
-                <InputText v-model="month" placeholder="Month to save" />
-              </span>
-              <Button @click="CallAiAssistance" class="ai-button" label="Submit" icon="pi pi-reddit" /></div
-          ></template>
-
-          <template v-else>
-            <span class="text-2xl font-bold mt-7">Account Balance AI prediction</span>
-            <div ref="lineChart" class="echarts-chart"></div>
-          </template>
-        </div>
+            </FileUpload>
+          </TabPanel>
+        </TabView>
       </div>
     </div>
   </div>

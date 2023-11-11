@@ -9,7 +9,7 @@ def sequence_prediction():
   data = [
       ["2023-01-01", "Groceries", -45],
       ["2023-01-01", "Utilities", -30],
-      ["2023-01-02", "Rent", -500],
+      ["2023-01-02", "Rent", -250],
       ["2023-01-02", "Freelance Income", 200],
       ["2023-01-03", "Transport", -20],
       ["2023-01-04", "Dining Out", -35],
@@ -22,7 +22,7 @@ def sequence_prediction():
       ["2023-01-10", "Utilities", -25],
       ["2023-01-11", "Clothing", -75],
       ["2023-01-12", "Freelance Income", 150],
-      ["2023-01-13", "Rent", -500],
+      ["2023-01-13", "Rent", -250],
       ["2023-01-14", "Groceries", -55],
       ["2023-01-15", "Dining Out", -30],
       ["2023-01-16", "Gym Membership", -25],
@@ -33,7 +33,7 @@ def sequence_prediction():
       ["2023-01-22", "Utilities", -30],
       ["2023-01-23", "Clothing", -80],
       ["2023-01-24", "Freelance Income", 250],
-      ["2023-01-25", "Rent", -500],
+      ["2023-01-25", "Rent", -250],
       ["2023-01-26", "Groceries", -65],
       ["2023-01-27", "Dining Out", -40],
       ["2023-01-28", "Gym Membership", -25],
@@ -44,7 +44,7 @@ def sequence_prediction():
       ["2023-02-02", "Utilities", -35],
       ["2023-02-03", "Clothing", -90],
       ["2023-02-04", "Freelance Income", 300],
-      ["2023-02-05", "Rent", -550],
+      ["2023-02-05", "Rent", -275],
       ["2023-02-06", "Groceries", -50],
       ["2023-02-07", "Dining Out", -45],
       ["2023-02-08", "Gym Membership", -30],
@@ -75,11 +75,14 @@ def sequence_prediction():
   model.fit(df)
 
   # Create a DataFrame for future dates to predict
-  periods = 60
+  periods = 15
   future = model.make_future_dataframe(periods=periods)
 
   # Predict values for future dates
   forecast = model.predict(future)
 
-  forecast['ds'] = forecast['ds'].dt.strftime('%Y-%m-%d') 
-  return forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].to_json()
+  forecast['ds'] = forecast['ds'].dt.strftime('%Y-%m-%d')
+  forecast['y'] = df['y']
+  forecast['yhat'] = forecast['yhat'].iloc[len(forecast)-periods:]
+  final_forecast = forecast[['ds', 'y', 'yhat']].to_json()
+  return final_forecast

@@ -407,7 +407,51 @@ export default {
 
               <ProgressSpinner v-if="loader" class="mt-8" />
 
-              <Message v-if="showReceiptResults" :closable="false" class="w-full" icon="null"> </Message>
+              <Message v-if="showReceiptResults" :closable="false" class="w-full text-xl" icon="null">
+                <h2>Items:</h2>
+                <ol class="text-xl">
+                    <li>Zucchini Green: 0.778kg @ $5.99/kg</li>
+                    <li>Banana Cavendish: 0.442kg @ $2.99/kg</li>
+                    <li>Special (no details provided)</li>
+                    <li>Special (no details provided)</li>
+                    <li>Potatoes Brushed: 1.328kg @ $2.99/kg</li>
+                    <li>Broccoli: 0.808kg @ $5.99/kg</li>
+                    <li>Brussel Sprouts: 0.322kg @ $15.99/kg</li>
+                    <li>Special (no details provided)</li>
+                    <li>Grapes Green: 1.174kg @ $5.99/kg</li>
+                    <li>Peas Snow: 0.218kg @ $14.99/kg</li>
+                    <li>Tomatoes Grape</li>
+                    <li>Lettuce Iceberg</li>
+                </ol>
+
+                <h2>Subtotals:</h2>
+                <ul class="text-xl">
+                    <li>$4.66</li>
+                    <li>$1.32</li>
+                    <li>$0.99</li>
+                    <li>$1.50</li>
+                    <li>$3.97</li>
+                    <li>$4.84</li>
+                    <li>$5.15</li>
+                    <li>$0.99</li>
+                    <li>$7.03</li>
+                    <li>$3.27</li>
+                    <li>$2.99</li>
+                    <li>$2.49</li>
+                </ul>
+
+                <h2>Total Purchase:</h2>
+                <p class="text-xl">$39.20</p>
+
+                <h2>Discounts/Loyalty:</h2>
+                <p class="text-xl">-$15.00</p>
+
+                <h2>Amount Paid:</h2>
+                <p class="text-xl">-$24.20 (Cash)</p>
+
+                <h2>Change Received:</h2>
+                <p class="text-xl">$25.80</p>
+              </Message>
             </div>
           </TabPanel>
         </TabView>

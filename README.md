@@ -1,3 +1,6 @@
+
+![Hackathon Slides](https://github.com/CoolmixZero/ErsteDigital_Hackathon/assets/107999456/eb035230-334e-414e-b4bf-0501951505cb)
+
 # Priorities
 - Relevant
 - Value
